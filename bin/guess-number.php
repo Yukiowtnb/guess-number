@@ -7,6 +7,6 @@ if (file_exists($autoloadPath)) {
     require_once($autoloadPath);
 }
 
-use function Yukiowtnb\GuessNumber\Controller\startGame;
+use function Yukiowtnb\GuessNumber\Controller\initiateGame;
 
-startGame();
+initiateGame();
