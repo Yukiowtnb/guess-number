@@ -1,5 +1,6 @@
 {
     "name": "yukio/guess-number",
+    "files.eol": "\n",
     "autoload": {
         "psr-4": {
             "Yukiowtnb\\GuessNumber\\": "src/"

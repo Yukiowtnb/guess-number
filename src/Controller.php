@@ -4,6 +4,7 @@ namespace Yukiowtnb\GuessNumber\Controller;
 
 use Exception;
 use Yukiowtnb\GuessNumber\Model;
+
 use function Yukiowtnb\GuessNumber\View\displayGame;
 use function Yukiowtnb\GuessNumber\View\displayWelcomeMessage;
 use function Yukiowtnb\GuessNumber\View\getPlayerName;

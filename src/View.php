@@ -4,6 +4,7 @@ namespace Yukiowtnb\GuessNumber\View;
 
 use Exception;
 use Yukiowtnb\GuessNumber\Database;
+
 use function cli\line;
 use function cli\input;
 
@@ -32,7 +33,10 @@ function displayGames($player_name)
     $database = new Database();
     $games = $database->getGames($player_name);
     foreach ($games as $game) {
-        line("Игра {$game['id']}: Дата - {$game['date']}, Игрок - {$game['player_name']}, Максимальное число - {$game['max_number']}, Загаданное число - {$game['generated_number']}, Исход - {$game['outcome']}");
+        line("Игра {$game['id']}: Дата - {$game['date']}, 
+             Игрок - {$game['player_name']}, Максимальное число 
+             - {$game['max_number']}, Загаданное число - {$game['generated_number']}, 
+             Исход - {$game['outcome']}");
     }
 }
 
@@ -41,7 +45,9 @@ function displayWins($player_name)
     $database = new Database();
     $wins = $database->getWins($player_name);
     foreach ($wins as $win) {
-        line("Выигрышная игра {$win['id']}: Дата - {$win['date']}, Игрок - {$win['player_name']}, Максимальное число - {$win['max_number']}, Загаданное число - {$win['generated_number']}");
+        line("Выигрышная игра {$win['id']}: Дата - {$win['date']},
+         Игрок - {$win['player_name']}, Максимальное число - {$win['max_number']}, 
+         Загаданное число - {$win['generated_number']}");
     }
 }
 
@@ -50,7 +56,9 @@ function displayLosses($player_name)
     $database = new Database();
     $losses = $database->getLosses($player_name);
     foreach ($losses as $loss) {
-        line("Проигрышная игра {$loss['id']}: Дата - {$loss['date']}, Игрок - {$loss['player_name']}, Максимальное число - {$loss['max_number']}, Загаданное число - {$loss['generated_number']}");
+        line("Проигрышная игра {$loss['id']}: Дата - {$loss['date']},
+         Игрок - {$loss['player_name']}, Максимальное число - {$loss['max_number']}, 
+         Загаданное число - {$loss['generated_number']}");
     }
 }
 
@@ -58,7 +66,7 @@ function displayPlayerStats($player_name)
 {
     $database = new Database();
     $playerStats = $database->getPlayerStats($player_name);
-    line("Статистика игрока '{$player_name}': Выигрыши - {$playerStats['wins']}, Проигрыши - {$playerStats['losses']}");
+    line("Статистика игрока '$player_name': Выигрыши - {$playerStats['wins']}, Проигрыши - {$playerStats['losses']}");
 }
 
 function displayMenu()

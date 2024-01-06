@@ -15,7 +15,8 @@ class Database
         $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
         // Создание таблиц, если они еще не существуют
-        $this->pdo->exec("
+        $this->pdo->exec(
+            "
             CREATE TABLE IF NOT EXISTS games (
                 id INTEGER PRIMARY KEY,
                 date TEXT,
@@ -24,9 +25,11 @@ class Database
                 generated_number INTEGER,
                 outcome TEXT
             )
-        ");
+        "
+        );
 
-        $this->pdo->exec("
+        $this->pdo->exec(
+            "
             CREATE TABLE IF NOT EXISTS attempts (
                 id INTEGER PRIMARY KEY,
                 game_id INTEGER,
@@ -35,40 +38,49 @@ class Database
                 computer_response TEXT,
                 FOREIGN KEY(game_id) REFERENCES games(id)
             )
-        ");
+        "
+        );
     }
 
     public function saveGame($game)
     {
-        $stmt = $this->pdo->prepare("
+        $stmt = $this->pdo->prepare(
+            "
             INSERT INTO games (date, player_name, max_number, generated_number, outcome)
             VALUES (:date, :player_name, :max_number, :generated_number, :outcome)
-        ");
+        "
+        );
 
-        $stmt->execute([
+        $stmt->execute(
+            [
             ':date' => $game['date'],
             ':player_name' => $game['player_name'],
             ':max_number' => $game['max_number'],
             ':generated_number' => $game['generated_number'],
             ':outcome' => $game['outcome']
-        ]);
+            ]
+        );
 
         return $this->pdo->lastInsertId();
     }
 
     public function saveAttempt($attempt)
     {
-        $stmt = $this->pdo->prepare("
+        $stmt = $this->pdo->prepare(
+            "
             INSERT INTO attempts (game_id, attempt_number, proposed_number, computer_response)
             VALUES (:game_id, :attempt_number, :proposed_number, :computer_response)
-        ");
+        "
+        );
 
-        $stmt->execute([
+        $stmt->execute(
+            [
             ':game_id' => $attempt['game_id'],
             ':attempt_number' => $attempt['attempt_number'],
             ':proposed_number' => $attempt['proposed_number'],
             ':computer_response' => $attempt['computer_response']
-        ]);
+            ]
+        );
     }
 
     public function updateGameOutcome($game_id, $outcome)
@@ -100,11 +112,13 @@ class Database
 
     public function getPlayerStats($player_name)
     {
-        $stmt = $this->pdo->prepare("SELECT COUNT(*) as wins FROM games WHERE player_name = :player_name AND outcome = 'win'");
+        $stmt = $this->pdo->prepare("SELECT COUNT(*) as wins FROM games 
+                                           WHERE player_name = :player_name AND outcome = 'win'");
         $stmt->execute([':player_name' => $player_name]);
         $wins = $stmt->fetch(PDO::FETCH_ASSOC)['wins'];
 
-        $stmt = $this->pdo->prepare("SELECT COUNT(*) as losses FROM games WHERE player_name = :player_name AND outcome = 'loss'");
+        $stmt = $this->pdo->prepare("SELECT COUNT(*) as losses FROM games 
+                                           WHERE player_name = :player_name AND outcome = 'loss'");
         $stmt->execute([':player_name' => $player_name]);
         $losses = $stmt->fetch(PDO::FETCH_ASSOC)['losses'];
 
@@ -123,7 +137,7 @@ class Database
         $sql = "UPDATE games SET generated_number = :generated_number WHERE id = :game_id";
         $stmt = $this->pdo->prepare($sql);
         $stmt->execute(['generated_number' => $number, 'game_id' => $game_id]);
-       }
+    }
 
     public function delete()
     {
